@@ -57,7 +57,7 @@ jobs:
               ${GITHUB_REPOSITORY} \
               ${GITHUB_REPO_URL} \
               ${OCI_REPO_PREFIX}$ \
-              ${OCI_ARTIFACT_NAME} 
+              ${OCI_ARTIFACT_NAME} \
               ${OCI_ARTIFACT_VERSION} \
               ${{ github.ref_name }} \
               ${ANNOTATION_SOURCE} \
