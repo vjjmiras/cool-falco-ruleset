@@ -60,7 +60,7 @@ jobs:
               ${OCI_ARTIFACT_NAME} 
               ${OCI_ARTIFACT_VERSION} \
               ${{ github.ref_name }} \
-              ${ANOTATION_SOURCE} \
+              ${ANNOTATION_SOURCE} \
               && pwd \
               && find . -name custom_falco_rules.yaml \
               && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
