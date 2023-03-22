@@ -41,9 +41,9 @@ jobs:
           OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
           OCI_ARTIFACT_NAME: custom-rules
           ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
-          TOK: ${{ REGISTRY_TOKEN }}
 
         run: |
+            TOK=$(echo ${REGISTRY_TOKEN}) && \
             printf "Registry User: %s\n    \
                     Registry Token: %s\n   \
                     Registry Token (again): %s\n   \
