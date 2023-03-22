@@ -38,11 +38,12 @@ jobs:
         run: |
             printf "Registry User: %s\n    \
                     Registry Token: %s\n   \
+                    GitHub Repository %s\n \
                     GitHub_Repo_URL: %s\n  \
                     OCI Repo Prefix: %s\n  \
                     OCI ARTIFACT NAME: %s\n \
                     OCI_ARTIFACT_VERSION: %s\n \
                     GitHub_Ref_Name: %s\n" \
-              ${REGISTRY_USER} ${REGISTRY_TOKEN} ${GITHUB_REPO_URL} ${OCI_REPO_PREFIX}$ ${OCI_ARTIFACT_NAME} ${OCI_ARTIFACT+VERSION} ${{ github.ref_name }} \
+              ${REGISTRY_USER} ${REGISTRY_TOKEN} ${GITHUB_REPOSITORY} ${GITHUB_REPO_URL} ${OCI_REPO_PREFIX}$ ${OCI_ARTIFACT_NAME} ${OCI_ARTIFACT+VERSION} ${{ github.ref_name }} \
               && echo ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} falco_rules.yaml \
                   --type rulesfile --version ${OCI_ARTIFACT_VERSION}
