@@ -15,10 +15,10 @@ jobs:
     steps:
 
       - name: Download falcoctl
-        run: wget ${FALCOCTL_PKG}
+        run: wget ${FALCOCTL_PKG} && pwd
 
       - name: Extract falcoctl
-        run: tar xvf $(basename $FALCOCTL_PKG) ${FALCOCTL_BIN}
+        run: tar xvf $(basename $FALCOCTL_PKG) ${FALCOCTL_BIN} && pwd
 
       - name: Checkout Rules
         uses: actions/checkout@v3
