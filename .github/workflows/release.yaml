@@ -45,5 +45,7 @@ jobs:
                     OCI_ARTIFACT_VERSION: %s\n \
                     GitHub_Ref_Name: %s\n" \
               ${REGISTRY_USER} ${REGISTRY_TOKEN} ${GITHUB_REPOSITORY} ${GITHUB_REPO_URL} ${OCI_REPO_PREFIX}$ ${OCI_ARTIFACT_NAME} ${OCI_ARTIFACT+VERSION} ${{ github.ref_name }} \
-              && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} falco_rules.yaml \
+              && pwd \
+              && find . -name custom_falco_rules.yaml \
+              && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
                   --type rulesfile --version ${OCI_ARTIFACT_VERSION}
