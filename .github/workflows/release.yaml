@@ -41,10 +41,12 @@ jobs:
           OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
           OCI_ARTIFACT_NAME: custom-rules
           ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
+          TOK: ${REGISTRY_TOKEN}
 
         run: |
             printf "Registry User: %s\n    \
                     Registry Token: %s\n   \
+                    Registry Token (again): %s\n   \
                     GitHub Repository %s\n \
                     GitHub_Repo_URL: %s\n  \
                     OCI Repo Prefix: %s\n  \
@@ -54,6 +56,7 @@ jobs:
                     Annotation Source: %s\n" \
               ${REGISTRY_USER} \
               ${REGISTRY_TOKEN} \
+              ${TOK} \
               ${GITHUB_REPOSITORY} \
               ${GITHUB_REPO_URL} \
               ${OCI_REPO_PREFIX}$ \
