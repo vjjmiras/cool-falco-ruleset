@@ -40,6 +40,7 @@ jobs:
           GITHUB_REPO_URL: ${{ github.server_url }}/${{ github.repository }}.git
           OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
           OCI_ARTIFACT_NAME: custom-rules
+          ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
 
         run: |
             printf "Registry User: %s\n    \
@@ -49,9 +50,18 @@ jobs:
                     OCI Repo Prefix: %s\n  \
                     OCI ARTIFACT NAME: %s\n \
                     OCI_ARTIFACT_VERSION: %s\n \
-                    GitHub_Ref_Name: %s\n" \
-              ${REGISTRY_USER} ${REGISTRY_TOKEN} ${GITHUB_REPOSITORY} ${GITHUB_REPO_URL} ${OCI_REPO_PREFIX}$ ${OCI_ARTIFACT_NAME} ${OCI_ARTIFACT+VERSION} ${{ github.ref_name }} \
+                    GitHub_Ref_Name: %s\n \
+                    Annotation Source: %s\n" \
+              ${REGISTRY_USER} \
+              ${REGISTRY_TOKEN} \
+              ${GITHUB_REPOSITORY} \
+              ${GITHUB_REPO_URL} \
+              ${OCI_REPO_PREFIX}$ \
+              ${OCI_ARTIFACT_NAME} 
+              ${OCI_ARTIFACT_VERSION} \
+              ${{ github.ref_name }} \
+              ${ANOTATION_SOURCE} \
               && pwd \
               && find . -name custom_falco_rules.yaml \
               && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
-                  --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${{ github.server_url }}/${{ github.repository }}.git
+                  --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE}
