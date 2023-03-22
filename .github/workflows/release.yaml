@@ -29,5 +29,5 @@ jobs:
           REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPO_URL: ${{ github.server_url }}/${{ github.repository }}.git
 
-        run: printf "Registry User: %s\nRegistry Token: %s\nGitHub_Repo_URL: %s\nOCI Repo Prefix: %s\n" \
+        run: printf "Registry User: %s\nRegistry Token: %s\nGitHub_Repo_URL: %s\nOCI Repo Prefix: %s\n" ${REGISTRY_USER} ${REGISTRY_TOKEN} ${GITHUB_REPO_URL} ${OCI_REPO_PREFIX}$
                     ${REGISTRY_USER} ${REGISTRY_TOKEN} ${GITHUB_REPO_URL} ${OCI_REPO_PREFIX}
