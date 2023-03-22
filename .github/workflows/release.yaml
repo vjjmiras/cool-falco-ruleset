@@ -8,13 +8,17 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      FALCOCTL_PKG: https://github.com/falcosecurity/falcoctl/releases/download/v0.4.0/falcoctl_0.4.0_linux_amd64.tar.gz
+      FALCOCTL_BIN: falcoctl
+
     steps:
 
       - name: Download falcoctl
-        run:  wget https://github.com/falcosecurity/falcoctl/releases/download/v0.4.0/falcoctl_0.4.0_linux_amd64.tar.gz
+        run: wget ${FALCOCTL_PKG}
 
       - name: Extract falcoctl
-        run:  tar xvf falcoctl_0.4.0_linux_amd64.tar.gz falcoctl
+        run: tar xvf $(basename $FALCOCTL_PKG) ${FALCOCTL_BIN}
 
       - name: Checkout Rules
         uses: actions/checkout@v3
@@ -28,11 +32,17 @@ jobs:
           REGISTRY_USER: ${{ github.repository_owner }}
           REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPO_URL: ${{ github.server_url }}/${{ github.repository }}.git
+          OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
+          OCI_ARTIFACT_NAME: custom-rules
 
         run: |
             printf "Registry User: %s\n    \
                     Registry Token: %s\n   \
                     GitHub_Repo_URL: %s\n  \
                     OCI Repo Prefix: %s\n  \
+                    OCI ARTIFACT NAME: %s\n \
+                    OCI_ARTIFACT_VERSION: %s\n \
                     GitHub_Ref_Name: %s\n" \
-              ${REGISTRY_USER} ${REGISTRY_TOKEN} ${GITHUB_REPO_URL} ${OCI_REPO_PREFIX}$ ${{ github.ref_name }}
+              ${REGISTRY_USER} ${REGISTRY_TOKEN} ${GITHUB_REPO_URL} ${OCI_REPO_PREFIX}$ ${OCI_ARTIFACT_NAME} ${OCI_ARTIFACT+VERSION} ${{ github.ref_name }} \
+              && echo ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} falco_rules.yaml \
+                  --type rulesfile --version ${OCI_ARTIFACT_VERSION}
