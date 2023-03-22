@@ -48,4 +48,4 @@ jobs:
               && pwd \
               && find . -name custom_falco_rules.yaml \
               && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
-                  --type rulesfile --version ${OCI_ARTIFACT_VERSION}
+                  --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${{ github.server_url }}/${{ github.repository }}.git
