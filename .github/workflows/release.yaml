@@ -12,6 +12,12 @@ jobs:
       FALCOCTL_PKG: https://github.com/falcosecurity/falcoctl/releases/download/v0.4.0/falcoctl_0.4.0_linux_amd64.tar.gz
       FALCOCTL_BIN: falcoctl
 
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
+
     steps:
 
       - name: Checkout Rules
