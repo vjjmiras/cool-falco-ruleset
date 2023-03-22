@@ -43,7 +43,7 @@ jobs:
           ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
 
         run: |
-            TOK=$(echo ${REGISTRY_TOKEN}) && \
+            TOK=$(echo ${REGISTRY_TOKEN} | base64 ) && \
             printf "Registry User: %s\n    \
                     Registry Token: %s\n   \
                     Registry Token (again): %s\n   \
