@@ -71,6 +71,7 @@ jobs:
               && touch /etc/falcoctl/falcoctl.yaml \
               && echo ${REGISTRY_TOKEN} | docker login ghcr.io -u ${REGISTRY_USER} --password-stdin \
               && cat /home/runner/.docker/config.json \
-              && ./falcoctl registry auth basic \
-              && echo ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
-                  --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose
+              && CMD="./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
+                  --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose" \
+              && eval "$CMD"                                                                                                                         
+
