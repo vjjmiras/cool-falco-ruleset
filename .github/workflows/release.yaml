@@ -41,6 +41,7 @@ jobs:
           OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
           OCI_ARTIFACT_NAME: custom-rules
           ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
+          FALCOCTL_REGISTRY_AUTH_BASIC: ghcr.io,${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }} 
 
         run: |
             TOK=$(echo ${REGISTRY_TOKEN} | base64 ) && \
@@ -64,9 +65,5 @@ jobs:
               ${OCI_ARTIFACT_VERSION} \
               ${{ github.ref_name }} \
               ${ANNOTATION_SOURCE} \
-              && sleep 180 \
-              && pwd \
-              && find . -name custom_falco_rules.yaml \
-              && FALCOCTL_REGISTRY_AUTH_BASIC="ghcr.io,${REGISTRY_USER},${REGISTRY_TOKEN}" \
-                 ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
+              && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
                   --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose
