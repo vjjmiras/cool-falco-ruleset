@@ -68,6 +68,7 @@ jobs:
               ${ANNOTATION_SOURCE} \
               ${FALCOCTL_REGISTRY_AUTH_BASIC} \
               && sudo mkdir -m 777 /etc/falcoctl \
-              && ./falcoctl registry auth basic \
-              && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
+              && echo ${REGISTRY_TOKEN} | docker login ghcr.io -u ${REGISTRY_USER} --password-stdin \
+              && echo ./falcoctl registry auth basic \
+              && echo ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
                   --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose
