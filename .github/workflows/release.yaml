@@ -71,5 +71,5 @@ jobs:
               && export CMD="./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
                   --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose" \
               && echo Running ${CMD} \                                                                                                          
-              && eval ${CMD}
+              && ${CMD}
 
