@@ -67,7 +67,7 @@ jobs:
               ${{ github.ref_name }} \
               ${ANNOTATION_SOURCE} \
               ${FALCOCTL_REGISTRY_AUTH_BASIC} \
-i             && mkdir -m 777 /etc/falcoctl \
+              && mkdir -m 777 /etc/falcoctl \
               && ./falcoctl registry auth basic \
               && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
                   --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose
