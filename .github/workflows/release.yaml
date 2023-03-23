@@ -67,7 +67,7 @@ jobs:
               ${{ github.ref_name }} \
               ${ANNOTATION_SOURCE} \
               ${FALCOCTL_REGISTRY_AUTH_BASIC} \
-i             && cat >./falcoctl.yaml<<EOF
+i             && cat >./falcoctl.yaml<<EOF \
                  registry:
                    auth:
                      basic:
