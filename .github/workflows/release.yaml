@@ -64,6 +64,7 @@ jobs:
               ${OCI_ARTIFACT_VERSION} \
               ${{ github.ref_name }} \
               ${ANNOTATION_SOURCE} \
+              && sleep 180 \
               && pwd \
               && find . -name custom_falco_rules.yaml \
               && FALCOCTL_REGISTRY_AUTH_BASIC="ghcr.io,${REGISTRY_USER},${REGISTRY_TOKEN}" \
