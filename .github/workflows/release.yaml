@@ -54,7 +54,8 @@ jobs:
                     OCI ARTIFACT NAME: %s\n \
                     OCI_ARTIFACT_VERSION: %s\n \
                     GitHub_Ref_Name: %s\n \
-                    Annotation Source: %s\n" \
+                    Annotation Source: %s\n \
+                    FALCOCTL_REGISTRY_AUTH_BASIC: %s\n" \
               ${REGISTRY_USER} \
               ${REGISTRY_TOKEN} \
               ${TOK} \
@@ -65,5 +66,6 @@ jobs:
               ${OCI_ARTIFACT_VERSION} \
               ${{ github.ref_name }} \
               ${ANNOTATION_SOURCE} \
+              ${FALCOCTL_REGISTRY_AUTH_BASIC} \
               && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
                   --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose
