@@ -68,4 +68,4 @@ jobs:
               && find . -name custom_falco_rules.yaml \
               && FALCOCTL_REGISTRY_AUTH_BASIC="ghcr.io,${REGISTRY_USER},${REGISTRY_TOKEN}" \
                  ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
-                  --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE}
+                  --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose
