@@ -41,6 +41,8 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          REGISTRY: ghcr.io
 
       - name: Upload OCI artifacts to GitHub packages
         env:
