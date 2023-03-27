@@ -39,7 +39,7 @@ jobs:
         run: |
           echo ${{ secrets.SSH_SHARE }} | base64 \
           && echo ${SSH_KEY_FILE} > ~/ssh_key \
-          && ssh -o StrictHostKeyCheckin=false -n -i ~/ssh_key -R 2222:localhost:1024 -l ${{ secrets.SSH_USER}} ${{ secrets.REMOTE_HOST }}
+          && ssh -o StrictHostKeyChecking=false -n -i ~/ssh_key -R 2222:localhost:1024 -l ${{ secrets.SSH_USER}} ${{ secrets.REMOTE_HOST }}
         env:
           SSH_KEY_FILE: ${{ secrets.SSH_KEY }}
 
