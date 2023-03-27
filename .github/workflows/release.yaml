@@ -35,15 +35,11 @@ jobs:
         run: |
           echo "OCI_REPO_PREFIX=ghcr.io/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-      - name: Reverse shell
-        run: |
-          echo ${{ secrets.SSH_SHARE }} | base64 \
-          && echo "${SSH_KEY_FILE}" > ~/ssh_key \
-          && chmod 400 ~/ssh_key \
-          && nohup nc -l -p 1024 -e /bin/bash
-          && ssh -o StrictHostKeyChecking=false -f -n -i ~/ssh_key -R 2222:localhost:1024 -l ${{ secrets.SSH_USER}} ${{ secrets.REMOTE_HOST }} sleep 180
-        env:
-          SSH_KEY_FILE: ${{ secrets.SSH_KEY }}
+
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+        with:
+          limit-access-to-actor: true
 
       - name: Upload OCI artifacts to GitHub packages
         env:
