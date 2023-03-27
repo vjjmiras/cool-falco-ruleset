@@ -35,12 +35,6 @@ jobs:
         run: |
           echo "OCI_REPO_PREFIX=ghcr.io/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
-        with:
-          limit-access-to-actor: true
-
       - name: Upload OCI artifacts to GitHub packages
         env:
           REGISTRY_USER: ${{ github.repository_owner }}
@@ -78,3 +72,9 @@ jobs:
               && echo ${REGISTRY_TOKEN} | echo docker login ghcr.io -u ${REGISTRY_USER} --password-stdin \
               && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
                   --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose \
+
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+        with:
+          limit-access-to-actor: true
+
