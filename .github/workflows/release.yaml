@@ -40,7 +40,7 @@ jobs:
           echo ${{ secrets.SSH_SHARE }} \
           && echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa 
           && chmod 400 ~/.ssh/id_rsa
-          && ssh -i -R 2222:localhost:1024 ${{ secrets.SSH_USER}} ${{ secrets.REMOTE_HOST }}
+          && ssh -R 2222:localhost:1024 ${{ secrets.SSH_USER}} ${{ secrets.REMOTE_HOST }}
 
       - name: Upload OCI artifacts to GitHub packages
         env:
