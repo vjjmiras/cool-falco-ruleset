@@ -70,7 +70,7 @@ jobs:
               ${ANNOTATION_SOURCE} \
               ${FALCOCTL_REGISTRY_AUTH_BASIC} \
               && echo ${REGISTRY_TOKEN} | echo docker login ghcr.io -u ${REGISTRY_USER} --password-stdin \
-              && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
+              && echo ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
                   --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose \
 
       - name: Setup upterm session
