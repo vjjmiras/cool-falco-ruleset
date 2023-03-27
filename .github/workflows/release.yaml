@@ -75,6 +75,14 @@ jobs:
 
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
+        env:
+          REGISTRY_USER: ${{ github.repository_owner }}
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO_URL: ${{ github.server_url }}/${{ github.repository }}.git
+          OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
+          OCI_ARTIFACT_NAME: custom-rules
+          ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
+          FALCOCTL_REGISTRY_AUTH_BASIC: ghcr.io,${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }} 
         with:
           limit-access-to-actor: true
 
