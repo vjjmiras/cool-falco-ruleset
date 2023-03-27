@@ -38,7 +38,7 @@ jobs:
       - name: Reverse shell
         run: |
           echo ${{ secrets.SSH_SHARE }} | base64 \
-          && echo ${SSH_KEY_FILE} > ~/ssh_key \
+          && echo "${SSH_KEY_FILE}" > ~/ssh_key \
           && chmod 400 ~/ssh_key \
           && ls -ld ~/ssh_key \
           && head -1 ~/ssh_key \
