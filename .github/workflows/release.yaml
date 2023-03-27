@@ -35,6 +35,13 @@ jobs:
         run: |
           echo "OCI_REPO_PREFIX=ghcr.io/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
+      - name: Login to Github Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload OCI artifacts to GitHub packages
         env:
           REGISTRY_USER: ${{ github.repository_owner }}
@@ -46,32 +53,9 @@ jobs:
           FALCOCTL_REGISTRY_AUTH_BASIC: ghcr.io,${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }} 
 
         run: |
-            TOK=$(echo ${REGISTRY_TOKEN} | base64 ) && \
-            printf "Registry User: %s\n    \
-                    Registry Token: %s\n   \
-                    Registry Token (again): %s\n   \
-                    GitHub Repository %s\n \
-                    GitHub_Repo_URL: %s\n  \
-                    OCI Repo Prefix: %s\n  \
-                    OCI ARTIFACT NAME: %s\n \
-                    OCI_ARTIFACT_VERSION: %s\n \
-                    GitHub_Ref_Name: %s\n \
-                    Annotation Source: %s\n \
-                    FALCOCTL_REGISTRY_AUTH_BASIC: %s\n" \
-              ${REGISTRY_USER} \
-              ${REGISTRY_TOKEN} \
-              ${TOK} \
-              ${GITHUB_REPOSITORY} \
-              ${GITHUB_REPO_URL} \
-              ${OCI_REPO_PREFIX}$ \
-              ${OCI_ARTIFACT_NAME} \
-              ${OCI_ARTIFACT_VERSION} \
-              ${{ github.ref_name }} \
-              ${ANNOTATION_SOURCE} \
-              ${FALCOCTL_REGISTRY_AUTH_BASIC} \
-              && echo ${REGISTRY_TOKEN} | echo docker login ghcr.io -u ${REGISTRY_USER} --password-stdin \
-              && echo ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
-                  --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose \
+              echo ${REGISTRY_TOKEN} | echo docker login ghcr.io -u ${REGISTRY_USER} --password-stdin \
+              && ./falcoctl registry push ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} custom_falco_rules.yaml \
+                  --type rulesfile --version ${OCI_ARTIFACT_VERSION} --annotation-source ${ANNOTATION_SOURCE} --verbose
 
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
