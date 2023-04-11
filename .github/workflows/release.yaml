@@ -49,6 +49,7 @@ jobs:
     #     ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
         run: |
              tools/falcoctl/falcoctl registry push \
+             --config /dev/null \
              --type rulesfile \
              --version ${OCI_ARTIFACT_VERSION} \
              ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} \
