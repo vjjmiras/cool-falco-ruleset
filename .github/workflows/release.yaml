@@ -36,7 +36,7 @@ jobs:
         with:
           repository: falcosecurity/falcoctl
           ref: main
-          path: tools/falcoctl 
+          path: tools/falcoctl
 
       - name: Build falcoctl
         working-directory: tools/falcoctl
