@@ -12,7 +12,7 @@ jobs:
 
     env:
       FALCOCTL_PKG: https://github.com/falcosecurity/falcoctl/releases/download/v0.4.0/falcoctl_0.4.0_linux_amd64.tar.gz
-      FALCOCTL_REPO: https://github.com/falcosecurity/falcoctl
+      FALCOCTL_REPO: github.com/falcosecurity/falcoctl
       FALCOCTL_BIN: falcoctl
       REGISTRY: ghcr.io
       RULESET_FILE: custom_falco_rules.yaml
