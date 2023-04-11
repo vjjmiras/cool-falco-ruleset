@@ -8,17 +8,24 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      RULESET_FILE: custom_falco_rules.yaml
-      OCI_REGISTRY: ghcr.io
-      OCI_ARTIFACT_NAME: custom-rules
-      OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
-
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
+
       id-token: write
       contents: read
       packages: write
+
+    env:
+
+      # Only one ruleset for our demo
+      RULESET_FILE: custom_falco_rules.yaml
+
+      # Used to setup Auth and OCI artifact location
+      OCI_REGISTRY: ghcr.io
+
+      # OCI artifact will look like ghcr.io/user/custom-rules:main
+      OCI_ARTIFACT_NAME: custom-rules
+      OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
 
     steps:
 
@@ -55,12 +62,9 @@ jobs:
              --type rulesfile \
              --version ${OCI_ARTIFACT_VERSION} \
              ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} \
-             rules/${RULESET_FILE} || echo Error
+             rules/${RULESET_FILE}
         env:
           FALCOCTL_REGISTRY_AUTH_BASIC: ${{ env.OCI_REGISTRY }},${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }}
-
-    #     ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
-        #    --annotation-source ${ANNOTATION_SOURCE} \
 
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
