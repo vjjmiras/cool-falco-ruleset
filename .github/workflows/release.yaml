@@ -34,6 +34,7 @@ jobs:
         with:
           repository: falcosecurity/falcoctl
           ref: main
+          path: ${{ env.$RUNNER_WORKSPACE }}/falcoctl 
 
       - name: Download falcoctl
         run: wget ${FALCOCTL_PKG}
