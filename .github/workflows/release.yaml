@@ -28,6 +28,8 @@ jobs:
 
       - name: Checkout Rules Repo
         uses: actions/checkout@v3
+        with:
+          path: rulesets
 
       - name: Checkout Falcoctl Repo
         uses: actions/checkout@v3
@@ -38,7 +40,7 @@ jobs:
 
       - name: Build falcoctl
         working-directory: tools/falcoctl
-        run: pwd && echo go build -o falcoctl ./...
+        run: make
 
     # - name: Extract falcoctl
     #   run: tar xvf $(basename $FALCOCTL_PKG) ${FALCOCTL_BIN}
