@@ -33,7 +33,7 @@ jobs:
       - name: Checkout Falcoctl Repo
         uses: actions/checkout@v3
         with:
-          repository: ${{ FALCOCTL_REPO }}
+          repository: github.com/falcosecurity/falcoctl
           ref: main
 
       - name: Download falcoctl
