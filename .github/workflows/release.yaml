@@ -44,9 +44,9 @@ jobs:
         run: |
           echo "OCI_REPO_PREFIX=${REGISTRY}/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-       - name: Upload OCI artifacts to GitHub packages
     #   env:
     #     ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
+       - name: Upload OCI artifacts to GitHub packages
         run: |
              tools/falcoctl/falcotl registry push \
              --type rulesfile \
