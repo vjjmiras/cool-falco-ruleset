@@ -5,8 +5,8 @@ on:
 
 jobs:
   Release-Rulesfile:
-    environment:
-      name: testing
+#   environment:
+#     name: testing
 
     runs-on: ubuntu-latest
 
