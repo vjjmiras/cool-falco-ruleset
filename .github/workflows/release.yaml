@@ -45,7 +45,8 @@ jobs:
           echo "OCI_REPO_PREFIX=${REGISTRY}/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
       - name: Upload OCI artifacts to GitHub packages
-    #   env:
+        env:
+          FALCOCTL_REGISTRY_AUTH_BASIC: ghcr.io,${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }}
     #     ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
         run: |
              tools/falcoctl/falcoctl registry push \
@@ -53,7 +54,7 @@ jobs:
              --type rulesfile \
              --version ${OCI_ARTIFACT_VERSION} \
              ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} \
-             rules/${RULESET_FILE}
+             rules/${RULESET_FILE} || echo Error
         #    --annotation-source ${ANNOTATION_SOURCE} \
 
       - name: Setup upterm session
