@@ -12,6 +12,7 @@ jobs:
 
     env:
       FALCOCTL_PKG: https://github.com/falcosecurity/falcoctl/releases/download/v0.4.0/falcoctl_0.4.0_linux_amd64.tar.gz
+      FALCOCTL_REPO: https://github.com/falcosecurity/falcoctl
       FALCOCTL_BIN: falcoctl
       REGISTRY: ghcr.io
       RULESET_FILE: custom_falco_rules.yaml
@@ -26,31 +27,37 @@ jobs:
 
     steps:
 
-      - name: Checkout Rules
+      - name: Checkout Rules Repo
         uses: actions/checkout@v3
+
+      - name: Checkout Falcoctl Repo
+        users: actions/checkout@v3
+        with:
+          reposity: ${{ FALCOCTL_REPO }}
+          ref: main
 
       - name: Download falcoctl
         run: wget ${FALCOCTL_PKG}
 
-      - name: Extract falcoctl
-        run: tar xvf $(basename $FALCOCTL_PKG) ${FALCOCTL_BIN}
+    # - name: Extract falcoctl
+    #   run: tar xvf $(basename $FALCOCTL_PKG) ${FALCOCTL_BIN}
 
       - name: Get lowercase OCI repo prefix
         run: |
           echo "OCI_REPO_PREFIX=${REGISTRY}/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Login to Github Packages
+    #   uses: docker/login-action@v2
+    #   with:
+    #     registry: ${{ env.REGISTRY }}
+    #     username: ${{ github.repository_owner }}
+    #     password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload OCI artifacts to GitHub packages
         env:
           ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
         run: |
-             ./${FALCOCTL_BIN} registry push \
+             echo ./${FALCOCTL_BIN} registry push \
              --type rulesfile \
              --version ${OCI_ARTIFACT_VERSION} \
              --annotation-source ${ANNOTATION_SOURCE} \
