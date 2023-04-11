@@ -38,7 +38,7 @@ jobs:
 
       - name: Build falcoctl
         working-directory: tools/falcoctl
-        run: go build -o falcoctl ./...
+        run: pwd && echo go build -o falcoctl ./...
 
     # - name: Extract falcoctl
     #   run: tar xvf $(basename $FALCOCTL_PKG) ${FALCOCTL_BIN}
