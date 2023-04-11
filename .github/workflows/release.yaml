@@ -27,7 +27,7 @@ jobs:
       - name: Checkout Rules Repo
         uses: actions/checkout@v3
         with:
-          path: rulesd
+          path: rules
 
       - name: Checkout Falcoctl Repo
         uses: actions/checkout@v3
@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "OCI_REPO_PREFIX=${REGISTRY}/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-       - name: Upload OCI artifacts to GitHub packages
+      - name: Upload OCI artifacts to GitHub packages
     #   env:
     #     ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
         run: |
