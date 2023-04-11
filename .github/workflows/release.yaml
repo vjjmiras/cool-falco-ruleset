@@ -27,7 +27,7 @@ jobs:
       - name: Checkout Rules Repo
         uses: actions/checkout@v3
         with:
-          path: rules
+          path: rulesd
 
       - name: Checkout Falcoctl Repo
         uses: actions/checkout@v3
