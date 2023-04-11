@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REGISTRY: ghcr.io
       RULESET_FILE: custom_falco_rules.yaml
+      OCI_REGISTRY: ghcr.io
       OCI_ARTIFACT_NAME: custom-rules
       OCI_ARTIFACT_VERSION: ${{ github.ref_name }}
 
@@ -24,10 +24,10 @@ jobs:
 
     steps:
 
-      - name: Checkout Rules Repo
-        uses: actions/checkout@v3
+      - name: Setup Golang
+        uses: actions/setup-go@v3
         with:
-          path: rules
+          go-version: '^1.20'
 
       - name: Checkout Falcoctl Repo
         uses: actions/checkout@v3
@@ -37,17 +37,19 @@ jobs:
           path: tools/falcoctl
 
       - name: Build falcoctl
-        working-directory: tools/falcoctl
         run: make
+        working-directory: tools/falcoctl
+
+      - name: Checkout Rules Repo
+        uses: actions/checkout@v3
+        with:
+          path: rules
 
       - name: Get lowercase OCI repo prefix
         run: |
-          echo "OCI_REPO_PREFIX=${REGISTRY}/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+          echo "OCI_REPO_PREFIX=${OCI_REGISTRY}/${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
       - name: Upload OCI artifacts to GitHub packages
-        env:
-          FALCOCTL_REGISTRY_AUTH_BASIC: ghcr.io,${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }}
-    #     ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
         run: |
              tools/falcoctl/falcoctl registry push \
              --config /dev/null \
@@ -55,6 +57,10 @@ jobs:
              --version ${OCI_ARTIFACT_VERSION} \
              ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} \
              rules/${RULESET_FILE} || echo Error
+        env:
+          FALCOCTL_REGISTRY_AUTH_BASIC: ${{ OCI_REGISTRY }},${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }}
+
+    #     ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
         #    --annotation-source ${ANNOTATION_SOURCE} \
 
       - name: Setup upterm session
