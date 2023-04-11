@@ -58,7 +58,7 @@ jobs:
              ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} \
              rules/${RULESET_FILE} || echo Error
         env:
-          FALCOCTL_REGISTRY_AUTH_BASIC: ${{ OCI_REGISTRY }},${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }}
+          FALCOCTL_REGISTRY_AUTH_BASIC: ${{ env.OCI_REGISTRY }},${{ github.repository_owner }},${{ secrets.GITHUB_TOKEN }}
 
     #     ANNOTATION_SOURCE: ${{ github.server_url }}/${{ github.repository }}.git
         #    --annotation-source ${ANNOTATION_SOURCE} \
