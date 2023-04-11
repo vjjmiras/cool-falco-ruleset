@@ -55,7 +55,7 @@ jobs:
              --version ${OCI_ARTIFACT_VERSION} \
              --annotation-source ${ANNOTATION_SOURCE} \
              ${OCI_REPO_PREFIX}/${OCI_ARTIFACT_NAME}:${OCI_ARTIFACT_VERSION} \
-             ${RULESET_FILE} 
+             ${RULESET_FILE}
 
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
