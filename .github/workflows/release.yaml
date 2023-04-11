@@ -36,8 +36,9 @@ jobs:
           ref: main
           path: tools/falcoctl 
 
-      - name: Download falcoctl
-        run: wget ${FALCOCTL_PKG}
+      - name: Build falcoctl
+        working-directory: tools/falcoctl
+        run: go build -o falcoctl ./...
 
     # - name: Extract falcoctl
     #   run: tar xvf $(basename $FALCOCTL_PKG) ${FALCOCTL_BIN}
