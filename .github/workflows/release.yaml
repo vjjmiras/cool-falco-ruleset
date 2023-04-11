@@ -4,6 +4,7 @@ on:
   - push
 
 jobs:
+
   Release-Rulesfile:
 
     runs-on: ubuntu-latest
