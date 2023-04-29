@@ -4,3 +4,4 @@
 - macro: write_etc_common
   append: true
   condition: and not proc.pname in (falco_binaries)
+
